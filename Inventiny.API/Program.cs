@@ -1,4 +1,5 @@
 using Inventiny.API.Endpoints.Category;
+using Inventiny.API.Endpoints.Products;
 using Inventiny.DataBase.Models;
 using Inventiny.Domain.Features.Category;
 using Inventiny.Domain.Features.Products;
@@ -32,6 +33,7 @@ app.UseHttpsRedirection();
 
 
 app.CategoryEndpoint();
+app.ProductEndpoint();
 
 app.Run();
 

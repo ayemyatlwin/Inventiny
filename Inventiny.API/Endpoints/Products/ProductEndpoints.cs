@@ -11,9 +11,11 @@ namespace Inventiny.API.Endpoints.Products
         {
             var group = app.MapGroup("/products");
 
-            group.MapGet("/", async ([FromServices] IProductService productService) =>
+            group.MapPost("/", async (
+             [FromBody] PaginationRequest pagination,
+             [FromServices] IProductService productService) =>
             {
-                var result = await productService.GetAllProducts(1, 10);
+                var result = await productService.GetAllProducts(pagination.PageNumber, pagination.PageSize);
                 return MapResult(result);
             });
 
@@ -48,6 +50,12 @@ namespace Inventiny.API.Endpoints.Products
             });
         }
 
+
+        public class PaginationRequest
+        {
+            public int PageNumber { get; set; } = 1;
+            public int PageSize { get; set; } = 10;
+        }
         private static IResult MapResult<T>(Result<T> result, bool includeMessage = false)
         {
             if (result.IsValidationError)
