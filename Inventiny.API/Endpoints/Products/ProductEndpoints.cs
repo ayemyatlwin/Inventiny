@@ -11,7 +11,7 @@ namespace Inventiny.API.Endpoints.Products
         {
             var group = app.MapGroup("/products");
 
-            group.MapPost("/", async (
+            group.MapPost("/list", async (
              [FromBody] PaginationRequest pagination,
              [FromServices] IProductService productService) =>
             {

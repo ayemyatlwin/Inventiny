@@ -28,7 +28,7 @@ namespace Inventiny.Domain.Features.Products
         public async Task<Result<TblProduct>> UpdateProduct(int productId, TblProduct product)
         {
             var existingProduct = await _db.TblProducts.FindAsync(productId);
-            if (existingProduct == null)
+            if (existingProduct is null)
             {
                 return Result<TblProduct>.ValidationError("Product not found.");
             }
@@ -45,7 +45,7 @@ namespace Inventiny.Domain.Features.Products
         public async Task<Result<TblProduct>> GetProductById(int productId)
         {
             var product = await _db.TblProducts.FindAsync(productId);
-            if (product == null)
+            if (product is null)
             {
                 return Result<TblProduct>.ValidationError("Product not found.");
             }

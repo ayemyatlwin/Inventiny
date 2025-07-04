@@ -39,19 +39,23 @@ namespace Inventiny.Domain.Features.Category
             return Result<TblCategory>.Success(existingCategory, "Category updated successfully.");
         }
 
+        
         public async Task<Result<bool?>> DeleteCategory(int categoryId)
         {
-            var existingCategory = _db.TblCategories.Find(categoryId);
+            var existingCategory = await _db.TblCategories.FindAsync(categoryId);
             if (existingCategory == null)
             {
                 return Result<bool?>.ValidationError("Category not found.");
             }
 
-            _db.TblCategories.Remove(existingCategory);
-            _db.SaveChanges();
+            existingCategory.DeleteFlag = true;
+
+            await _db.SaveChangesAsync();
+
             return Result<bool?>.Success(true, "Category deleted successfully.");
         }
 
+            
         public async Task<Result<TblCategory>> GetCategoryById(int categoryId)
         {
             var category = _db.TblCategories.Find(categoryId);
